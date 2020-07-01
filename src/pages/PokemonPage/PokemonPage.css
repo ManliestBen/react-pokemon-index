@@ -1,0 +1,21 @@
+.PokemonPage {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+  }
+  
+  .PokemonPage-pokemon {
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+    background-color: cornflowerblue;
+    color: white;
+  }
+  
+  .PokemonPage a {
+    color: white;
+  }
