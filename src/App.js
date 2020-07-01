@@ -1,26 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { getAllPokemon } from './services/pokemon-api';
+import { Route, Link } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state = {
+    pokemon: []
+  };
+
+  async componentDidMount() {
+    const pokemon = await getAllPokemon();
+    console.log(pokemon.results);
+    this.setState( {pokemon: pokemon.results} )
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">Pokemon Index</header>
+        <Route exact path="/" render={()=>
+          <section>
+            {this.state.pokemon.map((pokemon, idx) =>
+              <Link
+                key={pokemon.name}
+                to={`/pokemon/${idx + 1}`}
+              >
+                {pokemon.name}
+              </Link>
+            )}
+          </section>
+
+        }>
+
+        </Route>
+      
+      
+      
+      
+      
+      </div>
+    )
+  }
+
 }
 
 export default App;
