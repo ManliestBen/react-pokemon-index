@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { getAllPokemon } from './services/pokemon-api';
+import { getAllPokemon, getAllMovies } from './services/pokemon-api';
 import { Route, Link } from 'react-router-dom';
+import PokemonPage from './pages/PokemonPage/PokemonPage'
 
 class App extends Component {
 
   state = {
-    pokemon: []
+    pokemon: [],
+    movies: []
   };
 
   async componentDidMount() {
     const pokemon = await getAllPokemon();
+    const movies = await getAllMovies();
     console.log(pokemon.results);
-    this.setState( {pokemon: pokemon.results} )
+    console.log(movies);
+    this.setState( {pokemon: pokemon.results, movies: movies} )
+  }
+
+  getPokemon = (idx) => {
+    return this.state.pokemon[idx]
   }
 
   render() {
@@ -33,13 +41,14 @@ class App extends Component {
           </section>
 
         }>
-
         </Route>
-      
-      
-      
-      
-      
+        <Route path='/pokemon/:idx' render={(props) =>
+          <PokemonPage 
+            {...props}
+            getPokemon={this.getPokemon}
+          />
+        }>
+        </Route>  
       </div>
     )
   }
